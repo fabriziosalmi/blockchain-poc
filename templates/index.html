@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="mt-5 mb-4">Blockchain Explorer</h1>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Hash</th>
+          <th>Details</th> <!-- Add a column for transaction details -->
+	</tr>
+      </thead>
+      <tbody>
+{% for transaction in blockchain %}
+  <tr>
+    <td>{{ transaction.timestamp | float | timestamp_to_gmt }}</td>
+    <td>{{ transaction.hash }}</td>
+    <td>
+      <a href="/block/{{ loop.index0 }}">View Details</a>
+    </td>
+  </tr>
+{% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination mt-3">
+    <ul class="pagination">
+      {% if page > 1 %}
+        <li class="page-item"><a class="page-link" href="?page={{ page - 1 }}">Previous</a></li>
+      {% endif %}
+      {% if end < blockchain_length %}
+        <li class="page-item"><a class="page-link" href="?page={{ page + 1 }}">Next</a></li>
+      {% endif %}
+    </ul>
+  </div>
+{% endblock %}
