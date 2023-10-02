@@ -44,10 +44,6 @@ Contributions are what make the open-source community such an amazing place to l
 ## License
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
-## Contact
-- Fabrizio Salmi - [Github Profile](https://github.com/fabriziosalmi)
-- Project Link: [https://github.com/fabriziosalmi/domains-blacklists-blockchain](https://github.com/fabriziosalmi/domains-blacklists-blockchain)
-
 ## Acknowledgements
 - [Flask](https://flask.palletsprojects.com/)
 - [tldextract](https://pypi.org/project/tldextract/)
