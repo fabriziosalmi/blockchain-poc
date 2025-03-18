@@ -1,39 +1,36 @@
-import requests
 import datetime
 import os
+import requests
+import logging
 
-# Define the URL to retrieve the blacklist from
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 blacklist_url = "https://get.domainsblacklists.com/blacklist.txt"
+local_blacklist_path = os.path.join("data", "blacklist.txt")
 
-# Define the local file path to save the retrieved blacklist
-local_blacklist_path = "data/blacklist.txt"
-
-# Function to retrieve and save the blacklist
 def retrieve_and_save_blacklist():
+    """
+    Retrieves the blacklist from a remote URL and saves it to a local file.
+    
+    The function checks if the response status code is 200, writes a timestamp and the
+    blacklist content to the local file, and prints success or error messages.
+    
+    Raises:
+        requests.RequestException: If an error occurs during the request.
+    """
     try:
-        # Send an HTTP GET request to the URL
         response = requests.get(blacklist_url)
-
-        # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            # Get the current timestamp
             current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-            # Save the blacklist to the local file with timestamp
             with open(local_blacklist_path, "w") as blacklist_file:
                 blacklist_file.write(f"# Blacklist retrieved on {current_timestamp}\n")
                 blacklist_file.write(response.text)
-
-            print("Blacklist retrieved and saved successfully.")
-
+            logging.info("Blacklist retrieved and saved successfully.")
         else:
-            print(f"Failed to retrieve blacklist. Status Code: {response.status_code}")
-
+            logging.error(f"Failed to retrieve blacklist. Status Code: {response.status_code}")
     except requests.RequestException as e:
-        print(f"An error occurred while making the request: {str(e)}")
-
-    except Exception as e:
-        print(f"An unexpected error occurred: {str(e)}")
+        logging.error(f"An error occurred while making the request: {str(e)}")
 
 if __name__ == "__main__":
     retrieve_and_save_blacklist()
